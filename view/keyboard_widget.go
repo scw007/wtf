@@ -72,14 +72,19 @@ func (widget *KeyboardWidget) SetKeyboardKey(key tcell.Key, fn func(), helpText 
 	}
 }
 
-// InitializeCommonControls sets up the keyboard controls that are common to
+// InitializeCommonKeys sets up the keyboard controls that are common to
 // all widgets that accept keyboard input
-func (widget *KeyboardWidget) InitializeCommonControls(refreshFunc func()) {
-	widget.SetKeyboardChar("/", widget.ShowHelp, "Show/hide this help prompt")
+func (widget *KeyboardWidget) InitializeCommonKeys(refreshFunc func()) {
+	// Opens a modal dialog that displays the available keyboard controls for the module
+	widget.SetKeyboardChar("/", widget.showHelp, "Show/hide this help prompt")
 
 	if refreshFunc != nil {
+		// Calls the refresh function on the module to update its data
 		widget.SetKeyboardChar("r", refreshFunc, "Refresh widget")
 	}
+
+	// Opens a modal dialog that displays the settings and stats for the module
+	widget.SetKeyboardChar("?", widget.showSettings, "Show settings and stats for this widget")
 }
 
 // InputCapture is the function passed to tview's SetInputCapture() function
@@ -109,7 +114,7 @@ func (widget *KeyboardWidget) InputCapture(event *tcell.EventKey) *tcell.EventKe
 
 // HelpText returns the help text and keyboard command info for this widget
 func (widget *KeyboardWidget) HelpText() string {
-	str := " [green::b]Keyboard commands for " + strings.Title(widget.settings.Module.Type) + "[white]\n\n"
+	str := " [green::b]Keyboard commands for " + widget.moduleName() + "[white]\n\n"
 
 	for _, item := range widget.charHelp {
 		str += fmt.Sprintf("  %s\t%s\n", item.Key, item.Text)
@@ -127,7 +132,13 @@ func (widget *KeyboardWidget) SetView(view *tview.TextView) {
 	widget.view = view
 }
 
-func (widget *KeyboardWidget) ShowHelp() {
+/* -------------------- Unexported Functions -------------------- */
+
+func (widget *KeyboardWidget) moduleName() string {
+	return strings.Title(widget.settings.Module.Type)
+}
+
+func (widget *KeyboardWidget) showHelp() {
 	closeFunc := func() {
 		widget.pages.RemovePage("help")
 		widget.app.SetFocus(widget.view)
@@ -136,6 +147,33 @@ func (widget *KeyboardWidget) ShowHelp() {
 	modal := wtf.NewBillboardModal(widget.HelpText(), closeFunc)
 
 	widget.pages.AddPage("help", modal, false, true)
+	widget.app.SetFocus(modal)
+
+	widget.app.QueueUpdate(func() {
+		widget.app.Draw()
+	})
+}
+
+func (widget *KeyboardWidget) showSettings() {
+	closeFunc := func() {
+		widget.pages.RemovePage("settings")
+		widget.app.SetFocus(widget.view)
+	}
+
+	str := " [green::b]Settings for " + widget.moduleName() + "[white]\n\n"
+
+	str += fmt.Sprintf(" Type: %s\n", widget.settings.Module.Type)
+	str += fmt.Sprint("\n")
+	str += fmt.Sprintf(" Refresh: %d seconds\n", widget.settings.RefreshInterval)
+	str += fmt.Sprint("\n")
+	str += fmt.Sprintf(" Top: %d\n", widget.settings.PositionSettings.Top)
+	str += fmt.Sprintf(" Left: %d\n", widget.settings.PositionSettings.Left)
+	str += fmt.Sprintf(" Width: %d\n", widget.settings.PositionSettings.Width)
+	str += fmt.Sprintf(" Height: %d\n", widget.settings.PositionSettings.Height)
+
+	modal := wtf.NewBillboardModal(str, closeFunc)
+
+	widget.pages.AddPage("settings", modal, false, true)
 	widget.app.SetFocus(modal)
 
 	widget.app.QueueUpdate(func() {

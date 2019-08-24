@@ -3,7 +3,7 @@ package gitlab
 import "github.com/gdamore/tcell"
 
 func (widget *Widget) initializeKeyboardControls() {
-	widget.InitializeCommonControls(widget.Refresh)
+	widget.InitializeCommonKeys(widget.Refresh)
 
 	widget.SetKeyboardChar("h", widget.PrevSource, "Select previous project")
 	widget.SetKeyboardChar("l", widget.NextSource, "Select next project")
