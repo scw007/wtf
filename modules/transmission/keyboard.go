@@ -3,7 +3,7 @@ package transmission
 import "github.com/gdamore/tcell"
 
 func (widget *Widget) initializeKeyboardControls() {
-	widget.InitializeCommonKeys(nil)
+	widget.InitializeCommonKeys(nil, widget.ShowStatsModal)
 
 	widget.SetKeyboardChar("j", widget.Prev, "Select previous item")
 	widget.SetKeyboardChar("k", widget.Next, "Select next item")

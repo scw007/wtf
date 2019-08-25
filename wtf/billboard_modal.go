@@ -5,9 +5,11 @@ import (
 	"github.com/rivo/tview"
 )
 
-const offscreen = -1000
-const modalWidth = 80
-const modalHeight = 22
+const (
+	offscreen   = -1000
+	modalWidth  = 80
+	modalHeight = 22
+)
 
 func NewBillboardModal(text string, closeFunc func()) *tview.Frame {
 	keyboardIntercept := func(event *tcell.EventKey) *tcell.EventKey {

@@ -5,7 +5,7 @@ import (
 )
 
 func (widget *Widget) initializeKeyboardControls() {
-	widget.InitializeCommonKeys(widget.Refresh)
+	widget.InitializeCommonKeys(widget.Refresh, widget.ShowStatsModal)
 
 	widget.SetKeyboardChar("h", widget.prevProject, "Select previous project")
 	widget.SetKeyboardChar("l", widget.nextProject, "Select next project")

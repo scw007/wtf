@@ -23,6 +23,7 @@ const (
 // A Widget represents a Todo widget
 type Widget struct {
 	view.KeyboardWidget
+	view.StatableWidget
 	view.TextWidget
 
 	app      *tview.Application
@@ -37,6 +38,7 @@ func NewWidget(app *tview.Application, pages *tview.Pages, settings *Settings) *
 	widget := Widget{
 		KeyboardWidget: view.NewKeyboardWidget(app, pages, settings.common),
 		TextWidget:     view.NewTextWidget(app, settings.common, true),
+		StatableWidget: view.NewStatableWidget(app, pages, settings.common),
 
 		app:      app,
 		settings: settings,
@@ -54,6 +56,7 @@ func NewWidget(app *tview.Application, pages *tview.Pages, settings *Settings) *
 	widget.View.SetScrollable(true)
 
 	widget.KeyboardWidget.SetView(widget.View)
+	widget.StatableWidget.SetView(widget.View)
 
 	return &widget
 }

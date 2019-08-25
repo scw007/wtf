@@ -3,7 +3,7 @@ package rollbar
 import "github.com/gdamore/tcell"
 
 func (widget *Widget) initializeKeyboardControls() {
-	widget.InitializeCommonKeys(widget.Refresh)
+	widget.InitializeCommonKeys(widget.Refresh, widget.ShowStatsModal)
 
 	widget.SetKeyboardChar("j", widget.Next, "Select next item")
 	widget.SetKeyboardChar("k", widget.Prev, "Select previous item")

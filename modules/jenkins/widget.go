@@ -11,6 +11,7 @@ import (
 type Widget struct {
 	view.KeyboardWidget
 	view.ScrollableWidget
+	view.StatableWidget
 
 	settings *Settings
 	view     *View

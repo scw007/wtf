@@ -11,6 +11,7 @@ type Widget struct {
 	view.KeyboardWidget
 	view.MultiSourceWidget
 	view.ScrollableWidget
+	view.StatableWidget
 
 	projects []*Project
 	settings *Settings

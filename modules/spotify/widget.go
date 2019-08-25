@@ -12,6 +12,7 @@ import (
 // A Widget represents a Spotify widget
 type Widget struct {
 	view.KeyboardWidget
+	view.StatableWidget
 	view.TextWidget
 
 	client   spotigopher.SpotifyClient

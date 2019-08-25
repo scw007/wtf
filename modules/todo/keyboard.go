@@ -9,7 +9,7 @@ import (
 )
 
 func (widget *Widget) initializeKeyboardControls() {
-	widget.InitializeCommonKeys(widget.Refresh)
+	widget.InitializeCommonKeys(widget.Refresh, widget.ShowStatsModal)
 
 	widget.SetKeyboardChar("j", widget.displayNext, "Select next item")
 	widget.SetKeyboardChar("k", widget.displayPrev, "Select previous item")

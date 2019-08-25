@@ -10,6 +10,7 @@ import (
 type Widget struct {
 	view.MultiSourceWidget
 	view.KeyboardWidget
+	view.StatableWidget
 	view.TextWidget
 
 	GithubRepos []*GithubRepo

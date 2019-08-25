@@ -25,6 +25,7 @@ type FeedItem struct {
 type Widget struct {
 	view.KeyboardWidget
 	view.ScrollableWidget
+	view.StatableWidget
 
 	stories  []*FeedItem
 	parser   *gofeed.Parser

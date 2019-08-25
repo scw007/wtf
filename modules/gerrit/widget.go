@@ -14,6 +14,7 @@ import (
 
 type Widget struct {
 	view.KeyboardWidget
+	view.StatableWidget
 	view.TextWidget
 
 	gerrit *glb.Client

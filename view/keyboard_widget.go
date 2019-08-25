@@ -74,7 +74,7 @@ func (widget *KeyboardWidget) SetKeyboardKey(key tcell.Key, fn func(), helpText 
 
 // InitializeCommonKeys sets up the keyboard controls that are common to
 // all widgets that accept keyboard input
-func (widget *KeyboardWidget) InitializeCommonKeys(refreshFunc func()) {
+func (widget *KeyboardWidget) InitializeCommonKeys(refreshFunc func(), statsFunc func()) {
 	// Opens a modal dialog that displays the available keyboard controls for the module
 	widget.SetKeyboardChar("/", widget.showHelp, "Show/hide this help prompt")
 
@@ -84,7 +84,7 @@ func (widget *KeyboardWidget) InitializeCommonKeys(refreshFunc func()) {
 	}
 
 	// Opens a modal dialog that displays the settings and stats for the module
-	widget.SetKeyboardChar("?", widget.showSettings, "Show settings and stats for this widget")
+	widget.SetKeyboardChar("?", statsFunc, "Show settings and stats for this widget")
 }
 
 // InputCapture is the function passed to tview's SetInputCapture() function
@@ -128,6 +128,7 @@ func (widget *KeyboardWidget) HelpText() string {
 	return str
 }
 
+// SetView sets the parent view of this widget
 func (widget *KeyboardWidget) SetView(view *tview.TextView) {
 	widget.view = view
 }
@@ -147,33 +148,6 @@ func (widget *KeyboardWidget) showHelp() {
 	modal := wtf.NewBillboardModal(widget.HelpText(), closeFunc)
 
 	widget.pages.AddPage("help", modal, false, true)
-	widget.app.SetFocus(modal)
-
-	widget.app.QueueUpdate(func() {
-		widget.app.Draw()
-	})
-}
-
-func (widget *KeyboardWidget) showSettings() {
-	closeFunc := func() {
-		widget.pages.RemovePage("settings")
-		widget.app.SetFocus(widget.view)
-	}
-
-	str := " [green::b]Settings for " + widget.moduleName() + "[white]\n\n"
-
-	str += fmt.Sprintf(" Type: %s\n", widget.settings.Module.Type)
-	str += fmt.Sprint("\n")
-	str += fmt.Sprintf(" Refresh: %d seconds\n", widget.settings.RefreshInterval)
-	str += fmt.Sprint("\n")
-	str += fmt.Sprintf(" Top: %d\n", widget.settings.PositionSettings.Top)
-	str += fmt.Sprintf(" Left: %d\n", widget.settings.PositionSettings.Left)
-	str += fmt.Sprintf(" Width: %d\n", widget.settings.PositionSettings.Width)
-	str += fmt.Sprintf(" Height: %d\n", widget.settings.PositionSettings.Height)
-
-	modal := wtf.NewBillboardModal(str, closeFunc)
-
-	widget.pages.AddPage("settings", modal, false, true)
 	widget.app.SetFocus(modal)
 
 	widget.app.QueueUpdate(func() {

@@ -24,6 +24,7 @@ type Info struct {
 // Widget is the struct used by all WTF widgets to transfer to the main widget controller
 type Widget struct {
 	view.KeyboardWidget
+	view.StatableWidget
 	view.TextWidget
 
 	Info

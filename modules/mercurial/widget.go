@@ -15,6 +15,7 @@ const modalHeight = 7
 type Widget struct {
 	view.KeyboardWidget
 	view.MultiSourceWidget
+	view.StatableWidget
 	view.TextWidget
 
 	app      *tview.Application

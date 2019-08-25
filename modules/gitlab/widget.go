@@ -9,6 +9,7 @@ import (
 type Widget struct {
 	view.KeyboardWidget
 	view.MultiSourceWidget
+	view.StatableWidget
 	view.TextWidget
 
 	GitlabProjects []*GitlabProject

@@ -3,7 +3,7 @@ package mercurial
 import "github.com/gdamore/tcell"
 
 func (widget *Widget) initializeKeyboardControls() {
-	widget.InitializeCommonKeys(widget.Refresh)
+	widget.InitializeCommonKeys(widget.Refresh, widget.ShowStatsModal)
 
 	widget.SetKeyboardChar("l", widget.NextSource, "Select next source")
 	widget.SetKeyboardChar("h", widget.PrevSource, "Select previous source")

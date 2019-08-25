@@ -2,6 +2,7 @@ package view
 
 import (
 	"fmt"
+	"time"
 
 	"github.com/rivo/tview"
 	"github.com/wtfutil/wtf/cfg"
@@ -19,6 +20,7 @@ type Base struct {
 	quitChan        chan bool
 	refreshing      bool
 	refreshInterval int
+	refreshedAt     time.Time
 }
 
 func NewBase(app *tview.Application, commonSettings *cfg.Common, focusable bool) Base {
@@ -108,6 +110,11 @@ func (base *Base) Refreshing() bool {
 // RefreshInterval returns how often, in seconds, the base will return its data
 func (base *Base) RefreshInterval() int {
 	return base.refreshInterval
+}
+
+// RefreshedAt returned the time that the widget was last refreshed
+func (base *Base) RefreshedAt() time.Time {
+	return base.refreshedAt
 }
 
 func (base *Base) SetFocusChar(char string) {

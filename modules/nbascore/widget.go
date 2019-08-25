@@ -16,6 +16,7 @@ import (
 // A Widget represents an NBA Score  widget
 type Widget struct {
 	view.KeyboardWidget
+	view.StatableWidget
 	view.TextWidget
 
 	language string

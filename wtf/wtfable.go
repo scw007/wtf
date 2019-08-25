@@ -1,9 +1,10 @@
 package wtf
 
 import (
-	"github.com/wtfutil/wtf/cfg"
+	"time"
 
 	"github.com/rivo/tview"
+	"github.com/wtfutil/wtf/cfg"
 )
 
 // Wtfable is the interface that enforces WTF system capabilities on a module
@@ -19,6 +20,7 @@ type Wtfable interface {
 	HelpText() string
 	QuitChan() chan bool
 	Name() string
+	RefreshedAt() time.Time
 	SetFocusChar(string)
 	TextView() *tview.TextView
 
